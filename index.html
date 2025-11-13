@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Result Search</title>
+  <style>
+    body{font-family: Arial; background:#e9f6fb; padding:30px; display:flex; justify-content:center;}
+    .box{background:#fff; padding:20px; border-radius:6px; box-shadow:0 2px 6px rgba(0,0,0,0.1); width:360px;}
+    input{width:100%; padding:8px; margin:8px 0; box-sizing:border-box;}
+    button{width:100%; padding:10px; background:#2a9df4; color:white; border:none; cursor:pointer;}
+    a.download{display:inline-block; margin-top:10px; text-decoration:none; padding:8px 12px; border-radius:4px; background:#eee;}
+    p.msg{color:#d00;}
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h3>Bachelor Degree (Pass) Second Year</h3>
+    <form id="form">
+      <input id="roll" placeholder="Exam Roll" required />
+      <input id="reg"  placeholder="Registration" required />
+      <input id="year" placeholder="Exam Year (e.g., 2019)" required />
+      <button type="submit">Search Result</button>
+    </form>
+
+    <div id="out"></div>
+    <p class="msg" id="msg"></p>
+  </div>
+
+<script>
+document.getElementById('form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const roll = document.getElementById('roll').value.trim();
+  const reg  = document.getElementById('reg').value.trim();
+  const year = document.getElementById('year').value.trim();
+
+  // 🔹 তোমার Web App URL
+  const apiUrl = 'https://script.google.com/macros/s/AKfycbxhd7cddCKM3IqI11n8f8CoMfi71DiJ3cUVVW_Q7RxH3kKBotLaI7inQT6lzyI5ALGf/exec';
+  const url = apiUrl + '?roll=' + encodeURIComponent(roll) + '&reg=' + encodeURIComponent(reg) + '&year=' + encodeURIComponent(year);
+  document.getElementById('msg').innerText = 'Searching...';
+  document.getElementById('out').innerHTML = '';
+
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+    if (data.success) {
+      const a = document.createElement('a');
+      a.href = data.pdf;
+      a.target = '_blank';
+      a.className = 'download';
+      a.innerText = '📄 Open/Download Result PDF';
+      document.getElementById('out').appendChild(a);
+      document.getElementById('msg').innerText = '';
+    } else {
+      document.getElementById('msg').innerText = 'Result not found.';
+    }
+  } catch (err) {
+    document.getElementById('msg').innerText = 'Error: ' + err.message;
+  }
+});
+</script>
+</body>
+</html>
