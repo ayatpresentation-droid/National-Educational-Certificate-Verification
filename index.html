@@ -34,7 +34,9 @@ document.getElementById('form').addEventListener('submit', async function(e) {
   const year = document.getElementById('year').value.trim();
 
   // 🔹 তোমার Web App URL
-  const apiUrl = 'https://script.google.com/macros/s/AKfycbxhd7cddCKM3IqI11n8f8CoMfi71DiJ3cUVVW_Q7RxH3kKBotLaI7inQT6lzyI5ALGf/exec';
+  // 🔹 তোমার Apps Script Web App URL
+const apiUrl = 'https://script.google.com/macros/s/AKfycby2NcMg7dHyqEH3sYSPzwUqrRNM2XHpSUoLec_65DuP5RcFMNgNmvnkhfTXDn_o-H_E/exec';
+
   const url = apiUrl + '?roll=' + encodeURIComponent(roll) + '&reg=' + encodeURIComponent(reg) + '&year=' + encodeURIComponent(year);
   document.getElementById('msg').innerText = 'Searching...';
   document.getElementById('out').innerHTML = '';
